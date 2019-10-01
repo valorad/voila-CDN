@@ -18,6 +18,7 @@ func main() {
 
 	// Routes
 	e.GET("/api", routes.Index)
+	e.GET("/api/file", routes.FileIndex)
 	// e.GET("/index", rdIndex)
 
 	e.Static("/*", "statics")
