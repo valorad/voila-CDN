@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
 from rest_framework import routers
+from rest_framework.urlpatterns import format_suffix_patterns
+
 from replicaServer.api import views
 
-from rest_framework.urlpatterns import format_suffix_patterns
+
+
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -36,9 +41,11 @@ urlpatterns = [
     # path('', include(router.urls)),
     path('', views.index),
     path('api/', views.API.as_view()),
-    path('api/files', views.File.as_view()),
+    path('api/files', views.FileList.as_view()),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = format_suffix_patterns(urlpatterns)

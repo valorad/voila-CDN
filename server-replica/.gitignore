@@ -125,6 +125,7 @@ dmypy.json
 .pyre/
 
 # site specific
+media/**
 settings.py
 */statics/**
 !.gitkeep
