@@ -1,4 +1,4 @@
-module github.com/valorad/voila-CDN
+module github.com/valorad/voila-CDN/server-origin
 
 go 1.13
 
