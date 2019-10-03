@@ -4,7 +4,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 
-	"github.com/valorad/voila-CDN/server-origin/routes"
+	"github.com/valorad/voila-CDN/server-origin/src/routes"
 )
 
 func main() {
