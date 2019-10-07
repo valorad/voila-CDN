@@ -16,3 +16,5 @@ vendor/
 
 # Site specific
 go.sum
+statics/**
+!.gitignore

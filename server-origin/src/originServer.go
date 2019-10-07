@@ -18,7 +18,8 @@ func main() {
 
 	// Routes
 	e.GET("/api", routes.Index)
-	e.GET("/api/file", routes.FileIndex)
+	e.GET("/api/files", routes.FileIndex)
+	e.POST("/api/files", routes.FileAdd)
 	// e.GET("/index", rdIndex)
 
 	e.Static("/*", "statics")
