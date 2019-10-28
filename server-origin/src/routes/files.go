@@ -2,11 +2,11 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"net/http"
 
 	"github.com/go-resty/resty/v2"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type ReplicaFileAddResult struct {
@@ -18,6 +18,10 @@ type ReplicaFileAddResult struct {
 type FileAddResult struct {
 	Message string `json:"message" form:"message" query:"message"`
 	ReplicaResult ReplicaFileAddResult
+}
+
+type FileAddRequest struct {
+	Filename string `json:"filename" form:"filename" query:"filename"`
 }
 
 // get list
@@ -33,24 +37,42 @@ func FileIndex(c echo.Context) error {
 
 }
 
-func FileAdd(c echo.Context) error {
+func FileAdd(c echo.Context) (routeError error) {
+
+  req := new(FileAddRequest)
+  if err := c.Bind(&req); err != nil {
+    return
+  }
+
+  fileName := req.Filename
+
+  // Post the file to replica
 
 	client := resty.New()
 
-	resp, _ := client.R().
+	resp, err := client.R().
 		EnableTrace().
 		SetHeader("Content-Type", "multipart/form-data").
-		SetFile("document", "/mnt/m/workbench/_linux/voila-CDN/server-origin/statics/amd.txt").
+		SetFile("document", "statics/" + fileName).
 		Post("http://localhost:8000/api/files")
 
 	var replicaResult ReplicaFileAddResult
-	json.Unmarshal(resp.Body(), &replicaResult)
 
-  result := &FileAddResult{
-    Message:  `Pushed the file "amd.txt" to replica`,
-    ReplicaResult: replicaResult,
+	if err != nil {
+		result := &FileAddResult{
+			Message:  `Failed to upload file `,
+			ReplicaResult: replicaResult,
+		}
+		return c.JSON(http.StatusInternalServerError, result)
+	} else {
+		json.Unmarshal(resp.Body(), &replicaResult)
+	
+		result := &FileAddResult{
+			Message:  `Pushed the file ` + fileName + ` to replica`,
+			ReplicaResult: replicaResult,
+		}
+	
+		return c.JSON(http.StatusOK, result)
 	}
-
-	return c.JSON(http.StatusOK, result)
 
 }
