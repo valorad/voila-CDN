@@ -2,7 +2,7 @@ package routes
 
 import (
 	"encoding/json"
-	// "fmt"
+	"fmt"
 	"net/http"
 
 	"github.com/go-resty/resty/v2"
@@ -31,7 +31,7 @@ func FileIndex(c echo.Context) error {
 
 	resp, _ := client.R().
 		EnableTrace().
-		Get(host + "api/files")
+		Get(proxyHost + "api/files")
 
 	return c.JSON(http.StatusOK, resp)
 	// return c.JSON(http.StatusOK, host)
@@ -55,15 +55,16 @@ func FileAdd(c echo.Context) (routeError error) {
 		EnableTrace().
 		SetHeader("Content-Type", "multipart/form-data").
 		SetFile("document", "statics/" + fileName).
-		Post(host + "api/files")
+		Post(proxyHost + "api/files")
 
 	var replicaResult ReplicaFileAddResult
 
 	if err != nil {
 		result := &FileAddResult{
-			Message:  `Failed to upload file `,
+			Message:  `Failed to upload file ` + fileName,
 			ReplicaResult: replicaResult,
 		}
+		fmt.Println(err)
 		return c.JSON(http.StatusInternalServerError, result)
 	} else {
 		json.Unmarshal(resp.Body(), &replicaResult)
