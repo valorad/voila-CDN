@@ -4,10 +4,12 @@
 
 import os
 import logging
+import pathlib
 
 from django.contrib.auth.models import User, Group
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
+from django.conf import settings
 
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, renderer_classes
@@ -42,7 +44,18 @@ class API(APIView):
 class FileList(APIView):
 
     def get(self, request, format=None):
-        return Response("File Works")
+        fileInfos = []
+        for file in pathlib.Path(settings.MEDIA_ROOT).iterdir():
+            if file.is_file:
+                fileInfo = {}
+                fileInfo["name"] = file.name
+                fileInfos.append(fileInfo)
+                
+        data = {
+            "files": fileInfos
+        }
+
+        return JsonResponse(data=data, status=200)
     
     # Upload files
     def post(self, request, format=None):
