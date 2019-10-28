@@ -17,5 +17,7 @@ vendor/
 # Site specific
 go.sum
 statics/**
-!.gitignore
 dist/**
+src/configs/**
+!*.example.*
+!.gitkeep

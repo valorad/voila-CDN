@@ -1,6 +1,7 @@
 # Voila-CDN: Origin Server
 
 ## dev
+
 Fetch package
 
 ``` shell
@@ -9,12 +10,25 @@ Fetch package
   $ go mod vendor
 ```
 
+Get the dist folder ready
+
+- Create the `dist` folder
+- then create a `voila-CDN-origin.json` under `dist/configs` folder
+- put the files you like under `statics` folder
+
 Run
+
+Always run the program when you are at `dist` folder.
+
 ``` shell
-  $ go build -o dist/originServer src/originServer.go && dist/originServer
+  # Linux
+  $ cd dist
+  $ go build -o ./originServer ../src/originServer.go && originServer
 ```
 
 ``` powershell
-  PS> go build -o dist/originServer.exe src/originServer.go && dist/originServer.exe
+  # Windows
+  PS> cd dist
+  PS> go build -o .\originServer.exe ..\src\originServer.go && .\originServer.exe
 ```
 

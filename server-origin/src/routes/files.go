@@ -31,9 +31,10 @@ func FileIndex(c echo.Context) error {
 
 	resp, _ := client.R().
 		EnableTrace().
-		Get("http://localhost:8000/api/files")
+		Get(host + "api/files")
 
 	return c.JSON(http.StatusOK, resp)
+	// return c.JSON(http.StatusOK, host)
 
 }
 
@@ -54,7 +55,7 @@ func FileAdd(c echo.Context) (routeError error) {
 		EnableTrace().
 		SetHeader("Content-Type", "multipart/form-data").
 		SetFile("document", "statics/" + fileName).
-		Post("http://localhost:8000/api/files")
+		Post(host + "api/files")
 
 	var replicaResult ReplicaFileAddResult
 
