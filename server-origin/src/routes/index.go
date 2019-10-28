@@ -11,10 +11,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-var proxyHost string
+var replicaHosts []string
 
 type SiteConfig struct {
-	ProxyHost string `json:"proxyHost" form:"proxyHost" query:"proxyHost"`
+	ReplicaHosts []string `json:"replicaHosts" form:"replicaHosts" query:"replicaHosts"`
 }
 
 func Index(c echo.Context) error {
@@ -44,6 +44,6 @@ func init() {
 		fmt.Println(err)
 	}
 
-	proxyHost = config.ProxyHost
+	replicaHosts = config.ReplicaHosts
 
 }

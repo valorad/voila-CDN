@@ -15,6 +15,10 @@ type ReplicaFileAddResult struct {
 	Url string `json:"url" form:"url" query:"url"`
 }
 
+type FileAddResults struct {
+	Results []*FileAddResult
+}
+
 type FileAddResult struct {
 	Message string `json:"message" form:"message" query:"message"`
 	ReplicaResult ReplicaFileAddResult
@@ -24,17 +28,48 @@ type FileAddRequest struct {
 	Filename string `json:"filename" form:"filename" query:"filename"`
 }
 
+type FileGetListResult struct {
+	Host string `json:"host" form:"host" query:"host"`
+	Files map[string]interface{} `json:"files" form:"files" query:"files"`
+}
+
+type FileGetListResults struct {
+	Results []*FileGetListResult
+}
+
 // get list
 func FileIndex(c echo.Context) error {
 
 	client := resty.New()
 
-	resp, _ := client.R().
-		EnableTrace().
-		Get(proxyHost + "api/files")
+	fileGetListResults := []*FileGetListResult{}
 
-	return c.JSON(http.StatusOK, resp)
-	// return c.JSON(http.StatusOK, host)
+	for _, replica := range replicaHosts {
+		resp, err := client.R().
+		EnableTrace().
+		Get(replica + "api/files")
+		var replicaResponse map[string]interface{}
+
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			json.Unmarshal(resp.Body(), &replicaResponse)
+		}
+
+		fileGetListResult := &FileGetListResult{
+			Host: replica,
+			Files: replicaResponse,
+		}
+		
+		fileGetListResults = append(fileGetListResults, fileGetListResult)
+
+	}
+
+	results := &FileGetListResults {
+		Results: fileGetListResults,
+	}
+
+	return c.JSON(http.StatusOK, results)
 
 }
 
@@ -47,34 +82,44 @@ func FileAdd(c echo.Context) (routeError error) {
 
   fileName := req.Filename
 
-  // Post the file to replica
+  // Post the file to replica list
 
 	client := resty.New()
 
-	resp, err := client.R().
+	fileAddResults := []*FileAddResult{}
+
+	for _, replica := range replicaHosts {
+		resp, err := client.R().
 		EnableTrace().
 		SetHeader("Content-Type", "multipart/form-data").
 		SetFile("document", "statics/" + fileName).
-		Post(proxyHost + "api/files")
+		Post(replica + "api/files")
 
-	var replicaResult ReplicaFileAddResult
+		var replicaResult ReplicaFileAddResult
 
-	if err != nil {
-		result := &FileAddResult{
-			Message:  `Failed to upload file ` + fileName,
-			ReplicaResult: replicaResult,
+		if err != nil {
+			replicaResult := &FileAddResult{
+				Message:  `Failed to upload file ` + fileName + ` tp replica ` + replica,
+				ReplicaResult: replicaResult,
+			}
+			fmt.Println(err)
+			fileAddResults = append(fileAddResults, replicaResult)
+			
+		} else {
+			json.Unmarshal(resp.Body(), &replicaResult)
+
+			replicaResult := &FileAddResult{
+				Message:  `Pushed the file ` + fileName + ` to replica ` + replica,
+				ReplicaResult: replicaResult,
+			}
+			fileAddResults = append(fileAddResults, replicaResult)
 		}
-		fmt.Println(err)
-		return c.JSON(http.StatusInternalServerError, result)
-	} else {
-		json.Unmarshal(resp.Body(), &replicaResult)
-	
-		result := &FileAddResult{
-			Message:  `Pushed the file ` + fileName + ` to replica`,
-			ReplicaResult: replicaResult,
-		}
-	
-		return c.JSON(http.StatusOK, result)
+
 	}
 
+	results := &FileAddResults {
+		Results: fileAddResults,
+	}
+
+	return c.JSON(http.StatusOK, results)
 }

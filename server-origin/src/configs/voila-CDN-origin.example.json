@@ -1,4 +1,6 @@
 {
   "host": ":3399",
-  "proxyHost": "http://localhost:8000/"
+  "replicaHosts": [
+    "http://localhost:8000/"
+  ]
 }
