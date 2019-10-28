@@ -9,13 +9,12 @@ Fetch package
   $ go mod vendor
 ```
 
-Run dev
+Run
 ``` shell
-  $ go run originServer.go
+  $ go build -o dist/originServer src/originServer.go && dist/originServer
 ```
 
-Run prod
-``` shell
-  $ go build originServer.go
+``` powershell
+  PS> go build -o dist/originServer.exe src/originServer.go && dist/originServer.exe
 ```
 
