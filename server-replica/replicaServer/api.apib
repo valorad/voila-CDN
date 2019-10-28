@@ -1,0 +1,61 @@
+FORMAT: 1A
+HOST: http://localhost:8000/
+
+# voila-CDN:replica
+
+Replica server of voila-CDN. The server facing direct request from the users.
+
+# Group Files
+
+The Files endpoint.
+
+## Index Route [/api/files/]
+
+### Get the file list [GET]
+
++ Response 200 (application/json)
+
+        {
+            "files": [
+                {
+                    "name": ".gitkeep"
+                },
+                {
+                    "name": "amd.txt"
+                },
+                {
+                    "name": "myCatKit.flv"
+                },
+                {
+                    "name": "TV6.rmvb"
+                },
+                {
+                    "name": "appleWWDC2019.mp4"
+                },
+                {
+                    "name": "cookingClass.rar"
+                }
+            ]
+        }  
+
+### Upload a file [POST]
+
++ Request (multipart/form-data)
+
+        document = [FILE]
+
++ Response 200 (application/json)
+
+        {
+            "ok": true,
+            "message": "Successfully uploaded the file",
+            "status" = 200
+        }
+
++ Response 500 (application/json)
+
+        {
+            "ok": false,
+            "message": "Failed to upload the file",
+            "status" = 500
+        }

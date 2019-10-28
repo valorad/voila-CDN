@@ -1,0 +1,89 @@
+FORMAT: 1A
+HOST: http://localhost:3399/
+
+# voila-CDN:origin
+
+Origin server of voila-CDN. The server that has the files at first, then push to the replica server.
+
+# Group Files
+
+The Files endpoint.
+
+## Index Route [/api/files/]
+
+### Get the file list [GET]
+
+The exact response proxified from the Replica server
+
++ Response 200 (application/json)
+
+        {
+            "files": [
+                {
+                    "name": ".gitkeep"
+                },
+                {
+                    "name": "amd.txt"
+                },
+                {
+                    "name": "myCatKit.flv"
+                },
+                {
+                    "name": "TV6.rmvb"
+                },
+                {
+                    "name": "appleWWDC2019.mp4"
+                },
+                {
+                    "name": "cookingClass.rar"
+                }
+            ]
+        }  
+
+### Upload a file to the replica servers [POST]
+
+You just need to provide the file name.
+
++ Request (application/json)
+
+        {
+            "fileName": "amd.txt"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "Results": [
+                {
+                    "message": "Pushed the file amd.txt to replica http://localhost:8000/",
+                    "ReplicaResult": {
+                        "ok": true,
+                        "message": "Successfully uploaded the file",
+                        "url": "/media/amd.txt"
+                    }
+                },
+                {
+                    "message": "Pushed the file amd.txt to replica http://localhost:8001/",
+                    "ReplicaResult": {
+                        "ok": true,
+                        "message": "Successfully uploaded the file",
+                        "url": "/media/amd.txt"
+                    }
+                }
+            ]
+        }
+
++ Response 500 (application/json)
+
+        {
+            "Results": [
+                {
+                    "message": "Failed to upload file amd.txt tp replica http://localhost:8000/",
+                    "ReplicaResult": {
+                        "ok": false,
+                        "message": "",
+                        "url": ""
+                    }
+                }
+            ]
+        }
