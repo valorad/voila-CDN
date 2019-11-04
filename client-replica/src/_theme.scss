@@ -1,0 +1,6 @@
+@import "~vue-material/dist/theme/engine"; // Import the theme engine
+
+$primary: md-get-palette-color(blue, 500);
+$accent: md-get-palette-color(orange, A200);
+$foreground: #fff;
+$background: #f5f5f5;
