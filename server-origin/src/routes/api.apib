@@ -11,35 +11,6 @@ The Files endpoint.
 
 ## Index Route [/api/files/]
 
-### Get the file list [GET]
-
-The exact response proxified from the Replica server
-
-+ Response 200 (application/json)
-
-        {
-            "files": [
-                {
-                    "name": ".gitkeep"
-                },
-                {
-                    "name": "amd.txt"
-                },
-                {
-                    "name": "myCatKit.flv"
-                },
-                {
-                    "name": "TV6.rmvb"
-                },
-                {
-                    "name": "appleWWDC2019.mp4"
-                },
-                {
-                    "name": "cookingClass.rar"
-                }
-            ]
-        }  
-
 ### Upload a file to the replica servers [POST]
 
 You just need to provide the file name.
@@ -84,6 +55,87 @@ You just need to provide the file name.
                         "message": "",
                         "url": ""
                     }
+                }
+            ]
+        }
+
+## Local Files Route [/api/files/local]
+
+### Get the local file list [GET]
+
+Get the file list from the Origin server
+
++ Response 200 (application/json)
+
+        [
+            {
+                "name": ".gitkeep",
+                "type": "inode/x-empty"
+            },
+            {
+                "name": "amd.txt",
+                "type": "text/plain"
+            },
+            {
+                "name": "TV6.rmvb",
+                "type": "application/vnd.rn-realmedia-vbr"
+            },
+            {
+                "name": "Cooking Class.7z",
+                "type": "application/x-7z-compressed"
+            },
+            {
+                "name": "Phonetiques.flv",
+                "type": "application/x-shockwave-flash"
+            },
+            {
+                "name": "Phonetiques.flv",
+                "type": "application/x-shockwave-flash"
+            },
+            {
+                "name": "AppleWWDC2019.mp4",
+                "type": "video/mpeg4"
+            }
+        ]
+
+
+## Remote Files Route [/api/files/remote]
+
+### Get the Remote file list [GET]
+
+Get the file list from the Replica server
+
++ Response 200 (application/json)
+
+        {
+            "files": [
+                {
+                    "name": ".gitkeep",
+                    "type": "inode/x-empty"
+                },
+                {
+                    "name": "amd.txt",
+                    "type": "text/plain"
+                },
+                {
+                    "name": "TV6.rmvb",
+                    "type": "application/vnd.rn-realmedia-vbr"
+                },
+                {
+                    "name": "Cooking Class.7z",
+                    "type": "application/x-7z-compressed"
+                },
+                {
+                    "name": "Phonetiques.flv",
+                    "type": "application/x-shockwave-flash"
+                },
+                {
+                    "name": "Phonetiques.flv",
+                    "type": "application/x-shockwave-flash"
+                },
+                {
+                    "name": "AppleWWDC2019.mp4",
+                    "type": "video/mpeg4"
                 }
             ]
         }

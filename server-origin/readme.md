@@ -18,12 +18,12 @@ Get the dist folder ready
 
 Run
 
-Always run the program when you are at `dist` folder.
+Always run the program only when you are at `dist` folder.
 
 ``` shell
   # Linux
   $ cd dist
-  $ go build -o ./originServer ../src/originServer.go && originServer
+  $ go build -o ./originServer ../src/originServer.go && ./originServer
 ```
 
 ``` powershell
