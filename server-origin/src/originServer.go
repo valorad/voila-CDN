@@ -30,11 +30,13 @@ func main() {
 
 	// Routes
 	e.GET("/api", routes.Index)
-	e.GET("/api/files", routes.FileIndex)
+	e.GET("/api/files", routes.GETFilesIndex)
+	e.GET("/api/files/local", routes.GETFilesLocal)
+	e.GET("/api/files/remote", routes.GETFilesRemote)
 	e.POST("/api/files", routes.FileAdd)
 
 	e.Static("/*", "statics")
-	e.File("/", "statics/index.html")
+	e.File("/", "statics/client/index.html")
 
 	// Start server
 	e.Logger.Fatal(e.Start(host))
