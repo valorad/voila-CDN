@@ -5,6 +5,7 @@
 import os
 import logging
 import pathlib
+import magic
 
 from django.contrib.auth.models import User, Group
 from django.core.files.storage import FileSystemStorage
@@ -49,6 +50,7 @@ class FileList(APIView):
             if file.is_file:
                 fileInfo = {}
                 fileInfo["name"] = file.name
+                fileInfo["type"] = magic.from_file( str(file) , mime=True)
                 fileInfos.append(fileInfo)
                 
         data = {
