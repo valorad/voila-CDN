@@ -7,7 +7,11 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: "/",
+      path: "",
+      redirect: '/'
+    },
+    {
+      path: "/index",
       name: "home",
       component: Home
     },
@@ -18,6 +22,11 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ "./views/About.vue")
+    },
+    {
+      path: "**",
+      name: "http404",
+      component: () => import(/* webpackChunkName: "http404" */ './views/Http404.vue')
     }
   ]
 });

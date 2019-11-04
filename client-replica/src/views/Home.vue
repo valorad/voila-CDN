@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    Voila-CDN-Replica-Client works
+    Welcome to Voila-CDN-Replica-Client
   </div>
 </template>
 
