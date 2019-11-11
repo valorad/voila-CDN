@@ -15,26 +15,16 @@
               <md-table-head>Actions</md-table-head>
             </md-table-row>
 
-            <md-table-row> 
-              <md-table-cell md-numeric>1</md-table-cell>
-              <md-table-cell> <md-icon>insert_drive_file</md-icon> <a href="##">.gitkeep</a> </md-table-cell>
-              <md-table-cell>inode/x-empty</md-table-cell>
-              <md-table-cell> <a href="##"><md-icon>cloud_download</md-icon></a> </md-table-cell>
+            <md-table-row v-for="(file, index) of files" :key="`${index}-${file.name}`"> 
+              <md-table-cell md-numeric>{{ index + 1 }}</md-table-cell>
+              <md-table-cell>
+                <md-icon>insert_drive_file</md-icon>
+                <a :href="`${remoteMediaPath}/${encodeName(file.name)}`">{{ file.name }}</a>
+              </md-table-cell>
+              <md-table-cell>{{ file.type }}</md-table-cell>
+              <md-table-cell> <a :href="`${remoteMediaPath}/${encodeName(file.name)}`"><md-icon>cloud_download</md-icon></a> </md-table-cell>
             </md-table-row>
 
-            <md-table-row>
-              <md-table-cell md-numeric>2</md-table-cell>
-              <md-table-cell><md-icon>insert_drive_file</md-icon><a href="##">Cooking Class.7z</a></md-table-cell>
-              <md-table-cell>application/x-7z-compressed</md-table-cell>
-              <md-table-cell><a href="##"><md-icon>cloud_download</md-icon></a></md-table-cell>
-            </md-table-row>
-
-            <md-table-row>
-              <md-table-cell md-numeric>3</md-table-cell>
-              <md-table-cell><md-icon>insert_drive_file</md-icon><a href="##">AppleWWDC2019.mp4</a></md-table-cell>
-              <md-table-cell>video/mpeg4</md-table-cell>
-              <md-table-cell><a href="##"><md-icon>cloud_download</md-icon></a></md-table-cell>
-            </md-table-row>
           </md-table>
         </section>
 
@@ -62,7 +52,60 @@ section.allFiles {
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+interface FileInfo {
+  name: string,
+  type: string
+}
+
 @Component
-export default class Home extends Vue {}
+export default class Home extends Vue {
+
+  remoteMediaPath = "/media";
+
+  files: FileInfo[] = []
+
+  async init() {
+    let res =         {
+            "files": [
+                {
+                    "name": ".gitkeep",
+                    "type": "inode/x-empty"
+                },
+                {
+                    "name": "amd.txt",
+                    "type": "text/plain"
+                },
+                {
+                    "name": "TV6.rmvb",
+                    "type": "application/vnd.rn-realmedia-vbr"
+                },
+                {
+                    "name": "Cooking Class.7z",
+                    "type": "application/x-7z-compressed"
+                },
+                {
+                    "name": "Phonetiques.flv",
+                    "type": "application/x-shockwave-flash"
+                },
+                {
+                    "name": "AppleWWDC2019.mp4",
+                    "type": "video/mpeg4"
+                }
+            ]
+        }
+    
+    this.files = res.files;
+
+  }
+
+  encodeName(name: string) {
+    return encodeURIComponent(name);
+  }
+
+  mounted() {
+    this.init()
+  }
+
+}
 </script>
 
