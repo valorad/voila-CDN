@@ -6,6 +6,7 @@ import os
 import logging
 import pathlib
 import magic
+import socket
 
 from django.contrib.auth.models import User, Group
 from django.core.files.storage import FileSystemStorage
@@ -41,6 +42,18 @@ def index(request):
 class API(APIView):
     def get(self, request, format=None):
         return Response("API Works")
+
+class IPAddr(APIView):
+    def get(self, request, format=None):
+
+        ipAddr = {}
+        try: 
+            ipAddr["host"] = socket.gethostname()
+            ipAddr["ip"] = socket.gethostbyname(ipAddr["host"])
+        except: 
+            print("Unable to get Hostname and IP")
+
+        return JsonResponse(data=ipAddr, status=200)
 
 class FileList(APIView):
 
