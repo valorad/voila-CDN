@@ -5,11 +5,23 @@ HOST: http://localhost:8000/
 
 Replica server of voila-CDN. The server facing direct request from the users.
 
+# Group IP
+
+Get the ip address of the service container
+
+## IP Route [/api/ip/]
+
++ Response 200 (application/json)
+        {
+            "host": "VMS AI Server",
+            "ip": "127.0.1.1"
+        }
+
 # Group Files
 
 The Files endpoint.
 
-## Index Route [/api/files/]
+## Files Route [/api/files/]
 
 ### Get the file list [GET]
 
