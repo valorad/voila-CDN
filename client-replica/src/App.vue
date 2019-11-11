@@ -23,7 +23,12 @@
         </nav>
         <div class="flexSpacer"></div>
         <footer>
-
+          <div class="ip">
+            <ul>
+              <li> <md-icon>computer</md-icon> <span v-html="ipAddr.host"></span> </li>
+              <li> <md-icon>my_location</md-icon> <span v-html="ipAddr.ip"></span> </li>
+            </ul>
+          </div>
           <div class="github">
             <a target="_blank" rel="noopener noreferrer" href="https://github.com/valorad/voila-CDN"><i class="iconfont icon-github"></i></a>
           </div>
@@ -108,6 +113,20 @@
     display: flex;
   }
 
+  .ip {
+    @extend %fCentered;
+    ul {
+      @extend %fCentered;
+    }
+    li {
+      @extend %fCentered;
+      margin-right: 1.5em;
+    }
+    i {
+      margin: 0 0.5em;
+    }
+  }
+
   .gitlab {
     @extend %fCentered;
     margin-left: 1em;
@@ -117,6 +136,12 @@
 
 .router {
   height: 100%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
 
 @media only screen and (min-width: 768px) {
@@ -136,14 +161,36 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+interface IPAddr {
+  host: string,
+  ip: string
+}
+
 @Component
 export default class App extends Vue {
   isNavShown = false;
+
+  ipAddr = { } as IPAddr;
 
   toggleNav() {
     this.isNavShown = !this.isNavShown;
   };
 
+  async getIP() {
+    let ip: IPAddr = {
+      "host": "VMS AI Server",
+      "ip": "127.0.1.1"
+    }
+    return ip;
+  }
+
+  async init() {
+    this.ipAddr = await this.getIP();
+  }
+
+  mounted() {
+    this.init();
+  }
 
 }
 </script>

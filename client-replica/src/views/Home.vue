@@ -65,42 +65,45 @@ export default class Home extends Vue {
   files: FileInfo[] = []
 
   async init() {
-    let res =         {
-            "files": [
-                {
-                    "name": ".gitkeep",
-                    "type": "inode/x-empty"
-                },
-                {
-                    "name": "amd.txt",
-                    "type": "text/plain"
-                },
-                {
-                    "name": "TV6.rmvb",
-                    "type": "application/vnd.rn-realmedia-vbr"
-                },
-                {
-                    "name": "Cooking Class.7z",
-                    "type": "application/x-7z-compressed"
-                },
-                {
-                    "name": "Phonetiques.flv",
-                    "type": "application/x-shockwave-flash"
-                },
-                {
-                    "name": "AppleWWDC2019.mp4",
-                    "type": "video/mpeg4"
-                }
-            ]
-        }
-    
-    this.files = res.files;
-
+    this.files = await this.getFiles();
   }
 
   encodeName(name: string) {
     return encodeURIComponent(name);
   }
+
+  async getFiles() {
+    let files = {
+        "files": [
+            {
+                "name": ".gitkeep",
+                "type": "inode/x-empty"
+            },
+            {
+                "name": "amd.txt",
+                "type": "text/plain"
+            },
+            {
+                "name": "TV6.rmvb",
+                "type": "application/vnd.rn-realmedia-vbr"
+            },
+            {
+                "name": "Cooking Class.7z",
+                "type": "application/x-7z-compressed"
+            },
+            {
+                "name": "Phonetiques.flv",
+                "type": "application/x-shockwave-flash"
+            },
+            {
+                "name": "AppleWWDC2019.mp4",
+                "type": "video/mpeg4"
+            }
+        ]
+    }
+    return files.files;
+  }
+
 
   mounted() {
     this.init()
