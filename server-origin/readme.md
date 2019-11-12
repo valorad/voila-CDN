@@ -1,6 +1,22 @@
 # Voila-CDN: Origin Server
+Origin server of voilaCDN
 
-## dev
+## Deployment
+
+``` shell
+
+  docker run -d \
+  --name vcdn-ori-c1 \
+  -v /path/2/configs:/www/voila-CDN-origin/configs \
+  -v /path/2/localFileFolder:/www/voila-CDN-origin/statics/files \
+  valorad/voila-cdn-origin
+
+  # inspect id
+  docker inspect vcdn-ori-c1 | grep '"IPAddress"' | head -n 1
+
+```
+
+## Development
 
 Fetch package
 
@@ -31,4 +47,3 @@ Always run the program only when you are at `dist` folder.
   PS> cd dist
   PS> go build -o .\originServer.exe ..\src\originServer.go && .\originServer.exe
 ```
-

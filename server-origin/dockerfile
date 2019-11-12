@@ -1,0 +1,25 @@
+FROM alpine:edge
+
+ADD ./dist /www/voila-CDN-origin/
+ADD ./index.sh /www/voila-CDN-origin/
+
+WORKDIR /www/voila-CDN-origin
+
+RUN echo " --- Software installation starts --- " \
+ && apk update \
+ && apk add --no-cache su-exec libc6-compat \
+ && rm -rf /var/cache/apk/*
+
+VOLUME ["/www/voila-CDN-origin/configs", "/www/voila-CDN-origin/statics/files"]
+
+EXPOSE 3399
+
+RUN echo " --- Enabling Entry Script --- " \
+ && chmod +x "/www/voila-CDN-origin/index.sh"
+
+ENV EXEC_USER=voilaCDN
+ENV EXEC_USER_ID=1000
+ENV EXEC_PERMISSION=755
+
+ENTRYPOINT ["/www/voila-CDN-origin/index.sh"]
+CMD /www/voila-CDN-origin/originServer && /bin/sh
