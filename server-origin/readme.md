@@ -3,6 +3,11 @@ Origin server of voilaCDN
 
 ## Deployment
 
+- Create a folder for storing files, for later to upload to replica server. 
+- Create a config file called `voila-CDN-origin.json`, and put it under the folder `configs`
+- Configure the `replicaHosts`, which is the list of addresses of replica servers.
+- run the following command. You may also specify the port to map (e.g. add `-p 13399:3399` after `docker run ...`)
+
 ``` shell
 
   docker run -d \
@@ -18,7 +23,7 @@ Origin server of voilaCDN
 
 ## Development
 
-Fetch package
+### Fetch package
 
 ``` shell
   $ go build
@@ -26,13 +31,13 @@ Fetch package
   $ go mod vendor
 ```
 
-Get the dist folder ready
+### Get the dist folder ready
 
 - Create the `dist` folder
 - then create a `voila-CDN-origin.json` under `dist/configs` folder
-- put the files you like under `statics` folder
+- put the files you like under `statics/files` folder
 
-Run
+### Run
 
 Always run the program only when you are at `dist` folder.
 
