@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  replica1:
+    image: valorad/voila-cdn-replica:latest
+    container_name: voila-cdn-replica1
+    expose:
+      - 9000
+    volumes:
+      - "/path/2/r1/media:/www/voila-CDN-replica/media"
+      - "/path/2/r1/settings.py:/www/voila-CDN-replica/replicaServer/settings.py"
+    networks:
+      voila-cdn_net:
+        ipv4_address: 172.22.0.100
+
+  replica2:
+    image: valorad/voila-cdn-replica:latest
+    container_name: voila-cdn-replica2
+    expose:
+      - 9000
+    volumes:
+      - "/path/2/r2/media:/www/voila-CDN-replica/media"
+      - "/path/2/r2/settings.py:/www/voila-CDN-replica/replicaServer/settings.py"
+    networks:
+      voila-cdn_net:
+        ipv4_address: 172.22.0.101
+
+  replica3:
+    image: valorad/voila-cdn-replica:latest
+    container_name: voila-cdn-replica3
+    expose:
+      - 9000
+    volumes:
+      - "/path/2/r3/media:/www/voila-CDN-replica/media"
+      - "/path/2/r3/settings.py:/www/voila-CDN-replica/replicaServer/settings.py"
+    networks:
+      voila-cdn_net:
+        ipv4_address: 172.22.0.102
+
+networks:
+  voila-cdn_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.22.0.0/16
