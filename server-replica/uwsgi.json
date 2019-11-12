@@ -1,0 +1,12 @@
+{"uwsgi": {
+  "plugin": "python3",
+  "module": "replicaServer.wsgi:application",
+  "http-socket": "0.0.0.0:9000",
+  "protocol": "http",
+  "vacuum": true,
+  "buffer-size": 65535,
+  "enable-threads": true,
+  "master": true,
+  "processes": 4,
+  "env": "LANG=en_US.UTF-8"
+}}

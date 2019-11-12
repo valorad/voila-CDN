@@ -9,7 +9,7 @@ Replica server of voila-CDN. The server facing direct request from the users.
 
 Get the ip address of the service container
 
-## IP Route [/api/ip/]
+## IP Route [/api/ip]
 
 + Response 200 (application/json)
         {
@@ -21,7 +21,7 @@ Get the ip address of the service container
 
 The Files endpoint.
 
-## Files Route [/api/files/]
+## Files Route [/api/files]
 
 ### Get the file list [GET]
 
@@ -57,6 +57,8 @@ The Files endpoint.
         }  
 
 ### Upload a file [POST]
+
+Note: There is no trailing slash after "/api/files", and this DOES matter in django!
 
 + Request (multipart/form-data)
 
