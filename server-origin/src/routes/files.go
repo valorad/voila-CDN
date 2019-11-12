@@ -55,7 +55,7 @@ func GETFilesIndex(c echo.Context) error {
 // get list
 func GETFilesLocal(c echo.Context) error {
 
-	folder := "./statics"
+	folder := "./statics/files"
 
 	files, err := ioutil.ReadDir(folder)
 
@@ -140,7 +140,7 @@ func FileAdd(c echo.Context) (routeError error) {
 		resp, err := client.R().
 			EnableTrace().
 			SetHeader("Content-Type", "multipart/form-data").
-			SetFile("document", "statics/"+fileName).
+			SetFile("document", "statics/files/"+fileName).
 			Post(replica + "api/files")
 
 		var replicaResult ReplicaFileAddResult
