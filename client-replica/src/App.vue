@@ -25,8 +25,8 @@
         <footer>
           <div class="ip">
             <ul>
-              <li> <md-icon>computer</md-icon> <span v-html="ipAddr.host"></span> </li>
-              <li> <md-icon>my_location</md-icon> <span v-html="ipAddr.ip"></span> </li>
+              <li> <md-icon>computer</md-icon> <span v-html="hostInfo.host"></span> </li>
+              <li> <md-icon>my_location</md-icon> <span v-html="hostInfo.ip"></span> </li>
             </ul>
           </div>
           <div class="github">
@@ -163,33 +163,23 @@ ul {
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Mixins } from 'vue-property-decorator';
+import { HostInfo } from "./interfaces/host.interface";
 
-interface IPAddr {
-  host: string,
-  ip: string
-}
+import { HostService } from "./mixins/host.service";
 
 @Component
-export default class App extends Vue {
+export default class App extends Mixins(HostService) {
   isNavShown = false;
 
-  ipAddr = { } as IPAddr;
+  hostInfo = { } as HostInfo;
 
   toggleNav() {
     this.isNavShown = !this.isNavShown;
   };
 
-  async getIP() {
-    let ip: IPAddr = {
-      "host": "VMS AI Server",
-      "ip": "127.0.1.1"
-    }
-    return ip;
-  }
-
   async init() {
-    this.ipAddr = await this.getIP();
+    this.hostInfo = await this.getHostInfo();
   }
 
   mounted() {

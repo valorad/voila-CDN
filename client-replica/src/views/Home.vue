@@ -27,19 +27,42 @@
                   <md-table-cell>{{ file.type }}</md-table-cell>
                   <md-table-cell> <a :href="`${remoteMediaPath}/${encodeName(file.name)}`"><md-icon>cloud_download</md-icon></a> </md-table-cell>
                 </md-table-row>
-
               </md-table>
+
+              <h1 class="md-title" v-if="files.length <= 0">No files found on this server.</h1>
             </section>
           
         </md-tab>
         <md-tab id="tab-videos" md-label="Videos">
+
+          <section class="videos">
+            <ul>
+
+              <li class="video" v-if="videos.length <= 0">
+                <div class="player">
+                  <h2>No videos available on this server.</h2>
+                </div>
+              </li>
+
+              <li v-for="(video, index) of videos" :key="`${index}-${video.name}`" class="video">
+                <div class="player">
+                  <h2>{{ video.fileName }}</h2>
+                  <video-player
+                    class="vjs-custom-skin"
+                    :options="video.options"
+                    :playsinline="true"
+                  >
+                  </video-player>
+                </div>
+              </li>
+
+            </ul>
+          </section>
+
+
+
           <div class="player">
-              <video-player  class="vjs-custom-skin"
-                            ref="videoPlayer"
-                            :options="playerOptions"
-                            :playsinline="true"
-              >
-              </video-player>
+
           </div>
         </md-tab>
       </md-tabs>
@@ -52,7 +75,7 @@
 @import "src/var";
 
 .contentBox {
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   @extend %fCentered;
 }
@@ -65,15 +88,37 @@ section.allFiles {
   flex-grow: 1;
 }
 
+section.videos {
+  max-width: 108em;
+  margin: 1em auto;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  li {
+    margin: 1em auto;
+    width: 47%;
+  }
+  .player {
+    max-height: 30em;
+  }
+}
+
+
+
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Mixins } from 'vue-property-decorator';
 import { videoPlayer } from 'vue-video-player';
 
-interface FileInfo {
-  name: string,
-  type: string
+import { FileService } from "../mixins/file.service";
+
+import { FileInfo } from '../interfaces/file.interface';
+
+interface VideoFile {
+  fileName: string,
+  options: any,
 }
 
 @Component({
@@ -81,72 +126,74 @@ interface FileInfo {
     videoPlayer
   }
 })
-export default class Home extends Vue {
+export default class Home extends Mixins(FileService) {
 
   remoteMediaPath = "/media";
+  // remoteMediaPath = "/statics";
 
-  files: FileInfo[] = []
+  files: FileInfo[] = [];
 
-  playerOptions = {
-    height: '360',
-    autoplay: true,
-    muted: true,
+  videos: VideoFile[] = [];
+
+  supportedVideoTypes = ["video/mp4", "video/mpeg4", "video/webm", "video/ogg"]
+
+  playerBaseOptions = {
+    autoplay: false,
+    muted: false,
     language: 'en',
     playbackRates: [0.7, 1.0, 1.5, 2.0],
-    sources: [{
-      type: "video/mp4",
-      // mp4
-      src: "http://vjs.zencdn.net/v/oceans.mp4",
-      // webm
-      // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
-    }],
-    poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg",
+    height: "400px",
   }
-
-  get player() {
-    let videoHolder: any = this.$refs.videoPlayer;
-    return videoHolder.player
-  }
-
 
   async init() {
-    this.files = await this.getFiles();
+    this.files = await this.extractFileList();
+    this.filterVideoFiles();
   }
 
   encodeName(name: string) {
     return encodeURIComponent(name);
   }
 
-  async getFiles() {
-    let files = {
-        "files": [
-            {
-                "name": ".gitkeep",
-                "type": "inode/x-empty"
-            },
-            {
-                "name": "amd.txt",
-                "type": "text/plain"
-            },
-            {
-                "name": "TV6.rmvb",
-                "type": "application/vnd.rn-realmedia-vbr"
-            },
-            {
-                "name": "Cooking Class.7z",
-                "type": "application/x-7z-compressed"
-            },
-            {
-                "name": "Phonetiques.flv",
-                "type": "application/x-shockwave-flash"
-            },
-            {
-                "name": "AppleWWDC2019.mp4",
-                "type": "video/mpeg4"
-            }
-        ]
+  async extractFileList() {
+  
+    // let files = {
+    //     "files": [
+    //         {
+    //             "name": "amd.txt",
+    //             "type": "text/plain"
+    //         },
+    //         {
+    //             "name": "Shanghai Trip.mp4",
+    //             "type": "video/mpeg4"
+    //         },
+    //         {
+    //             "name": "Lugu Lake.mp4",
+    //             "type": "video/mpeg4"
+    //         }
+    //     ]
+    // }
+
+    let fileList = await this.getFiles();
+
+    return fileList.files;
+  }
+
+  filterVideoFiles() {
+    let filteredVideos = this.files.filter((file) => {
+      return this.supportedVideoTypes.includes(file.type);
+    })
+
+    for (let video of filteredVideos) {
+      this.videos.push({
+        fileName: video.name,
+        options: {
+          ...this.playerBaseOptions,
+          sources: [{src: `${this.remoteMediaPath}/${this.encodeName(video.name)}`}]
+        }
+      });
     }
-    return files.files;
+
+
   }
 
 
