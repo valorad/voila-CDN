@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 @renderer_classes([StaticHTMLRenderer])
 def index(request):
 
-    htmlFile = os.path.join(BASE_DIR, 'statics/') + "index.html"
+    htmlFile = os.path.join(BASE_DIR, 'statics/client/') + "index.html"
     # data = '<html><body><h1>Hello, world</h1></body></html>'
     html = open(htmlFile)
     data = html.read()

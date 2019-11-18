@@ -127,5 +127,5 @@ dmypy.json
 # site specific
 media/**
 settings.py
-*/statics/**
+**/statics/
 !.gitkeep

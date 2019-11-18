@@ -18,6 +18,7 @@ RUN echo " --- Collecting Python Wheels --- " \
 
 RUN echo " --- Django Init --- " \
  && python manage.py migrate
+ && python manage.py collectstatic
 
 VOLUME ["/www/voila-CDN-replica/media"]
 
