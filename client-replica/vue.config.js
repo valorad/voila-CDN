@@ -30,7 +30,7 @@ let config = {
 }
 
 if (env && env.toLowerCase() !== "development") {
-  config.publicPath = "/statics";
+  config.publicPath = "/statics/client";
 }
 
 module.exports = config;

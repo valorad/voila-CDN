@@ -1,7 +1,9 @@
 import Vue from "vue";
+import VueVideoPlayer from 'vue-video-player';
+import "./registerServiceWorker";
+
 import App from "./App.vue";
 import router from "./router";
-import "./registerServiceWorker";
 
 import {
   MdButton,
@@ -40,6 +42,9 @@ Vue.use(MdSteppers);
 Vue.use(MdContent);
 Vue.use(MdMenu);
 
+
+
+Vue.use(VueVideoPlayer);
 
 new Vue({
   router,
