@@ -69,6 +69,10 @@
 @import "~vue-material/dist/vue-material.min.css";
 @import "themeApplied";
 
+// vue video player
+@import "~video.js/dist/video-js.min.css";
+@import "~vue-video-player/src/custom-theme.css";
+
 // custom
 @import "var";
 
