@@ -14,4 +14,8 @@ media/
 .gitignore
 .sqlite3
 settings.py
-**/statics/
+**/statics/**
+docker-compose.yml
+
+!replicaServer/statics/client/
+!.gitkeep

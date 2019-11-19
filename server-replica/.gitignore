@@ -127,5 +127,7 @@ dmypy.json
 # site specific
 media/**
 settings.py
-**/statics/
+**/statics/**
+docker-compose.yml
+
 !.gitkeep

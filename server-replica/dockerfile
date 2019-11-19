@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:latest
 LABEL maintainer="Valorad <valorad@outlook.com>"
 
 ADD . /www/voila-CDN-replica/
@@ -17,7 +17,7 @@ RUN echo " --- Collecting Python Wheels --- " \
  && pip install --no-cache-dir -r requirements.txt
 
 RUN echo " --- Django Init --- " \
- && python manage.py migrate
+ && python manage.py migrate \
  && python manage.py collectstatic
 
 VOLUME ["/www/voila-CDN-replica/media"]
