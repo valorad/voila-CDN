@@ -1,5 +1,8 @@
 # Voila-CDN: Origin Server
-Origin server of voilaCDN
+
+Origin server of voila-CDN
+
+Check out the [API document on Apiary](https://voilacdnorigin.docs.apiary.io)
 
 ## Deployment
 

@@ -1,5 +1,5 @@
 FROM alpine:edge
-LABEL maintainer="Valroad <valorad@outlook.com>"
+LABEL maintainer="Valorad <valorad@outlook.com>"
 
 ADD . /www/voila-CDN-replica/
 WORKDIR /www/voila-CDN-replica

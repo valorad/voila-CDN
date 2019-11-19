@@ -1,5 +1,8 @@
 # Server Replica
-Replica server
+
+Replica server of voila-CDN.
+
+Check out the [API document on Apiary](https://voilacdnreplica.docs.apiary.io)
 
 ## Deployment
 
