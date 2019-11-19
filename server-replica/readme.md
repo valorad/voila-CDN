@@ -1,5 +1,9 @@
 # Server Replica
 
+[![Docker pulls](https://img.shields.io/docker/pulls/valorad/voila-cdn-replica.svg?style=flat-square)](https://hub.docker.com/r/valorad/voila-cdn-replica/)
+[![](https://images.microbadger.com/badges/version/valorad/voila-cdn-replica.svg)](https://microbadger.com/images/valorad/voila-cdn-replica "voila-cdn-replica Version")
+[![](https://images.microbadger.com/badges/image/valorad/voila-cdn-replica.svg)](https://microbadger.com/images/valorad/voila-cdn-replica "voila-cdn-replica Image")
+
 Replica server of voila-CDN.
 
 Check out the [API document on Apiary](https://voilacdnreplica.docs.apiary.io)
