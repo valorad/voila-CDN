@@ -147,7 +147,7 @@ func FileAdd(c echo.Context) (routeError error) {
 
 		if err != nil {
 			replicaResult := &FileAddResult{
-				Message:       `Failed to upload file ` + fileName + ` tp replica ` + replica,
+				Message:       `Failed to upload file ` + fileName + ` to replica ` + replica,
 				ReplicaResult: replicaResult,
 			}
 			fmt.Println(err)

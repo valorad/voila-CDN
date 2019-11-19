@@ -25,9 +25,6 @@ func init() {
 
 	configFile, err := os.Open("./configs/voila-CDN-origin.json");
 
-	// dir, _ := os.Getwd()
-	// fmt.Println(dir)
-
 	if err != nil {
 		fmt.Println(err)
 	}
