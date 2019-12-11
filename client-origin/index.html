@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>voila-CDN-Origin</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1492360_rcvfc2l2j9h.css">
     <style>
         body {
             margin: 0;
@@ -61,6 +62,7 @@
             height: 4em;
             margin: 0;
             background-color: #87CEFA;
+            color: white;
         }
         .appHeader h1 {
             margin: 0.5em;
@@ -72,14 +74,26 @@
         .flexSpacer {
             flex-grow: 1;
         }
+        .navFooter {
+            margin: 0 1em;
+        }
+        .navFooter a {
+            color: white;
+            text-decoration: none;
+        }
+        .navFooter i {
+            font-size: 3em;
+        }
 
     </style>
 </head>
 <body>
     <header class="appHeader">
         <h1>Voila-CDN-Origin</h1>
-        <div class="flexspacer"></div>
-        <footer></footer>
+        <div class="flexSpacer"></div>
+        <footer class="navFooter">
+            <a href="https://github.com/valorad/voila-CDN/tree/master/server-origin" target="_blank"><i class="iconfont icon-github"></i></a>
+        </footer>
     </header>
     <table class="tableposition" border="1" width="80%" cellspacing="0" bordercolor="#CCC">
         <thead>
