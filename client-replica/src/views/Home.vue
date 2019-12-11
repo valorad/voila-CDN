@@ -155,23 +155,6 @@ export default class Home extends Mixins(FileService) {
   }
 
   async extractFileList() {
-  
-    // let files = {
-    //     "files": [
-    //         {
-    //             "name": "amd.txt",
-    //             "type": "text/plain"
-    //         },
-    //         {
-    //             "name": "Shanghai Trip.mp4",
-    //             "type": "video/mpeg4"
-    //         },
-    //         {
-    //             "name": "Lugu Lake.mp4",
-    //             "type": "video/mpeg4"
-    //         }
-    //     ]
-    // }
 
     let fileList = await this.getFiles();
 

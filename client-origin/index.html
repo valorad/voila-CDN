@@ -150,18 +150,11 @@
                 data: JSON.stringify({fileName: name}),
                 crossDomain: true,
                 success: function(data) {
-                    var sum = 0;
+                    let allOK = true;
                     for (var i = 0; i < data.Results.length; i++){
-                        if (data.Results[i].ReplicaResult.ok == "true"){
-                            sum++;
-                        }
+                        allOK = allOK && data.Results[i].ReplicaResult.ok;
                     }
-                    if (sum == data.Results.length){
-                        alert("uploading succeed");
-                    }else{
-                        alert("uploading fail");
-                    }
-
+                    allOK? alert("upload to all replica succeed") : alert("some upload-to-replica sessions are failed");
                 }
             });
         }

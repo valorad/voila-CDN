@@ -10,21 +10,23 @@
         </div>
 
         <header>
-          <span class="md-title">Voila-CDN-Replica</span>
+          <router-link :to="`/index`">
+            <span class="md-title">Voila-CDN-Replica</span>
+          </router-link>
         </header>
         
-        <nav>
-          <router-link :to="`/index`">
+        <!-- <nav>
+          
             <md-button class="md-dense">
               index
             </md-button>
-          </router-link>
+          
 
-        </nav>
+        </nav> -->
         <div class="flexSpacer"></div>
         <footer>
           <div class="ip">
-            <ul>
+            <ul v-if="hostInfo">
               <li> <md-icon>computer</md-icon> <span v-html="hostInfo.host"></span> </li>
               <li> <md-icon>my_location</md-icon> <span v-html="hostInfo.ip"></span> </li>
             </ul>
