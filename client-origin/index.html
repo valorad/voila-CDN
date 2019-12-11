@@ -5,6 +5,9 @@
     <title>voila-CDN-Origin</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <style>
+        body {
+            margin: 0;
+        }
         .titletext{
             font-family: 'Hind Guntur', sans-serif;
             font-size: 25px;
@@ -52,9 +55,32 @@
         tbody button:hover { 
 	        background: rgb(90, 149, 238);
         }
+        .appHeader {
+            display: flex;
+            align-items: center;
+            height: 4em;
+            margin: 0;
+            background-color: #87CEFA;
+        }
+        .appHeader h1 {
+            margin: 0.5em;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            font-size: 1.5em;
+        }
+        .flexSpacer {
+            flex-grow: 1;
+        }
+
     </style>
 </head>
 <body>
+    <header class="appHeader">
+        <h1>Voila-CDN-Origin</h1>
+        <div class="flexspacer"></div>
+        <footer></footer>
+    </header>
     <table class="tableposition" border="1" width="80%" cellspacing="0" bordercolor="#CCC">
         <thead>
             <tr>

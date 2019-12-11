@@ -63,7 +63,7 @@
 <style lang="scss">
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons");
-@import url("//at.alicdn.com/t/font_1492360_4nxu2v9zd.css");
+@import url("//at.alicdn.com/t/font_1492360_rcvfc2l2j9h.css");
 
 // vue material
 @import "~vue-material/dist/vue-material.min.css";
