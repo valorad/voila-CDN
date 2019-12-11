@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>voila-CDN-Origin</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <style>
+        .titletext{
+            font-family: 'Hind Guntur', sans-serif;
+            font-size: 25px;
+            color: rgb(104, 104, 104);
+            text-align: left;
+            line-height: 50px;
+        }
+        .tableposition{
+            font-family: 'Hind Guntur', sans-serif;
+            font-size: 20px;
+            color: rgb(104, 104, 104);
+            text-align: center;
+            line-height: 40px;
+            width: 550px;
+            position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+            margin: auto;
+        }
+        .list{
+            font-family: 'Hind Guntur', sans-serif;
+            font-size: 20px;
+            color: rgba(0, 217, 255, 0.801);
+            text-align: center;
+            line-height: 40px;
+        }
+        
+        tbody tr:nth-child(even) {
+            background:rgba(230, 255, 250, 0.92);
+        }
+        tbody button{
+            display: inline-block;
+            font-family: 'Hind Guntur', sans-serif;
+            font-size: 18px;
+            text-align:center; 
+            width: 80px;
+            height: 30px;
+            color: #fff;
+            letter-spacing: 0.025em;
+            padding: 20px .5 11px;
+            cursor: pointer;
+            overflow: hidden;
+            background-color: #87CEFA;
+            border-radius: 14px;
+            border:none
+        }
+        tbody button:hover { 
+	        background: rgb(90, 149, 238);
+        }
+    </style>
+</head>
+<body>
+    <table class="tableposition" border="1" width="80%" cellspacing="0" bordercolor="#CCC">
+        <thead>
+            <tr>
+                <th colspan="3" class="titletext" >Video Lists:</th>
+            </tr> 
+        </thead>
+        <tbody id="tbMain"></tbody>
+    </table>
+
+    <script>
+        var host = "";
+        $(document).ready(function(){
+            var tbody = document.getElementById('tbMain');
+            $.get(host + "/api/files/local",function(data){
+                var video_list = [];
+                $.each(data, function(index,item){
+                    var video = {id: index + 1, name: item.name};
+                    video_list.push(video)
+                    // var video_list = ["id: ", index + 1, "name: ", item.name].join('\n');
+                });
+                for(var i = 0;i < video_list.length; i++){ 
+                        var trow = getDataRow(video_list[i]); 
+                        tbody.appendChild(trow);
+                    }
+            });
+        });
+            
+        function getDataRow(h){
+            var row = document.createElement('tr'); //创建行
+            
+            var idCell = document.createElement('td'); //创建第一列id
+            idCell.innerHTML = h.id; //填充数据
+            row.appendChild(idCell); //加入行 
+            
+            var nameCell = document.createElement('td');
+            nameCell.innerHTML = h.name;
+            nameCell.className = "list";
+            row.appendChild(nameCell);
+            
+            var pushCell = document.createElement('td');
+            row.appendChild(pushCell);
+            var btnPush = document.createElement('button'); 
+            btnPush.innerHTML = "PUSH";
+            btnPush.addEventListener("click", function () { pushFile(h.name) } );
+            pushCell.appendChild(btnPush);
+            return row;
+        }	
+        function pushFile(name){
+
+            $.post({
+                url: host + "/api/files",
+                contentType: 'application/json',
+                data: JSON.stringify({fileName: name}),
+                crossDomain: true,
+                success: function(data) {
+                    var sum = 0;
+                    for (var i = 0; i < data.Results.length; i++){
+                        if (data.Results[i].ReplicaResult.ok == "true"){
+                            sum++;
+                        }
+                    }
+                    if (sum == data.Results.length){
+                        alert("uploading succeed");
+                    }else{
+                        alert("uploading fail");
+                    }
+
+                }
+            });
+        }
+    </script>
+</body>
+</html>

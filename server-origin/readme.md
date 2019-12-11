@@ -53,5 +53,5 @@ Always run the program only when you are at `dist` folder.
 ``` powershell
   # Windows
   PS> cd dist
-  PS> go build -o .\originServer.exe ..\src\originServer.go && .\originServer.exe
+  PS> go build -o .\originServer.exe ..\src\originServer.go ; .\originServer.exe
 ```
