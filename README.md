@@ -24,3 +24,6 @@ Check out the [API document of Replica server](https://voilacdnreplica.docs.apia
 
 Check out the [API document of Origin server](https://voilacdnorigin.docs.apiary.io)
 
+## Demo
+
+We have the demo available on [Youtube](https://youtu.be/Z4eoUrQ9d7s) and on [Bilibili](https://www.bilibili.com/video/av78845315/)
