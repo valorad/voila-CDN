@@ -27,6 +27,31 @@ Check out the [API document on Apiary](https://voilacdnreplica.docs.apiary.io)
       $ docker-compose up -d
     ```
 
+  ### On Kubernetes:
+
+  Prepare your single `settings.py` mentioned in section "**Via `docker-compose`**"
+
+  Follow the steps to deploy voila-cdn-replica server on an existing Kubernetes cluster. The yaml config files are provided under `k8s` folder. Change the content if necessary.
+
+  ``` shell
+
+  # Load settings.py into a config map
+  kubectl create configmap voila-cdn-replica --from-file=/path/to/settings.py
+
+  # Create a deployment
+  kubectl create -f k8s/voila-cdn-replica.deployment.yml
+
+  # Create a service
+  kubectl create -f k8s/voila-cdn-replica.svc.yml
+
+  # Expose the service by executing on master node:
+  kubectl port-forward svc/voila-cdn-replica 29000:19000 --address 0.0.0.0
+
+  ```
+
+  Now visit your master node and Voilà!
+
+
   ### Manually
 
   If you prefer running the docker containers manually, then the following command may be what you need. You still need to create the `settings.py` and specify the secret key within.

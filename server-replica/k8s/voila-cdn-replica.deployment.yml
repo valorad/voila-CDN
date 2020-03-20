@@ -1,0 +1,31 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voila-cdn-replica
+  labels:
+    app: voila-cdn-replica
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: voila-cdn-replica
+  template:
+    metadata:
+      labels:
+        app: voila-cdn-replica
+    spec:
+      containers:
+        - name: voila-cdn-replica
+          image: valorad/voila-cdn-replica:v0.3.1
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - name: site-config
+              mountPath: /www/voila-CDN-replica/replicaServer/settings.py
+              subPath: settings.py
+      volumes:
+        - name: site-config
+          configMap:
+            name: voila-cdn-replica
